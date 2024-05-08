@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import { IDigimon } from '../interfaces/digimon';
-import { getDigimons } from '../services/getDigimons';
-import * as C from './style.ts'
-import digivice from '../assets/imgs/digivice.png'
+import { IDigimon } from '../../interfaces/digimon.tsx';
+import { getDigimons } from '../../services/getDigimons.ts';
+import * as C from './style.ts';
+import digivice from '../../assets/imgs/digivice.png';
 import { SmileTwoTone } from '@ant-design/icons';
 
 export function DigimonList() {
     const [digimons, setDigimons] = useState<IDigimon[]>([]);
     const [isOpen, setIsOpen] = useState(false);
-    console.log(isOpen);
+    // console.log(isOpen);
 
 
     useEffect(() => {

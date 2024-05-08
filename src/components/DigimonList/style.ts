@@ -43,7 +43,7 @@ export const Button = styled.button`
     align-items: center;
     padding: 8px 12px;
     font-family: 'Source Code Pro', sans-serif;
-    font-size: 12px;
+    font-size: 16px;
     color: #264653;
     margin-right: 8rem;
     border: none;
@@ -63,6 +63,5 @@ export const List = styled.ul`
     display: flex;
     flex-wrap: wrap;
     padding: 1.5rem;
-    // background-color: lightblue;
     justify-content: center;
 `;

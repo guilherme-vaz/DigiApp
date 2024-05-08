@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { DigimonList } from './components/DigimonList.tsx'
+import { DigimonList } from './components/DigimonList/DigimonList.tsx'
 
 
 function App() {

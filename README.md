@@ -18,7 +18,7 @@ $ npm run dev
 
 <p align="center">
   <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=js,react,git" />
+    <img src="https://skillicons.dev/icons?i=ts,react,git" />
   </a>
 </p>
 <p align="center">Made with ❤️ by Guilherme Vaz 👋🏽 Get in touch!</p>
