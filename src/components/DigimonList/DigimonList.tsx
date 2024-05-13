@@ -4,11 +4,11 @@ import { getDigimons } from '../../services/getDigimons.ts';
 import * as C from './style.ts';
 import digivice from '../../assets/imgs/digivice.png';
 import { SmileTwoTone } from '@ant-design/icons';
+import { Modal } from '../Modal/Modal.tsx';
 
 export function DigimonList() {
     const [digimons, setDigimons] = useState<IDigimon[]>([]);
     const [isOpen, setIsOpen] = useState(false);
-    // console.log(isOpen);
 
 
     useEffect(() => {
@@ -30,6 +30,7 @@ export function DigimonList() {
                         <SmileTwoTone />
                         Login
                     </C.Button>
+                    {isOpen && <Modal handleClose = {() => setIsOpen(false)} IsOpen={isOpen}/>}
                 </C.Header>
                 <C.List>
                     {digimons.map((digimon) => (
