@@ -64,4 +64,11 @@ export const List = styled.ul`
     flex-wrap: wrap;
     padding: 1.5rem;
     justify-content: center;
+    li {
+        display: flex;
+        padding: 5rem;
+        flex-direction: colunm;
+        background-color: tomato;
+        gap: 3rem;
+    }
 `;
