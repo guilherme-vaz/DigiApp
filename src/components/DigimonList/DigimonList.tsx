@@ -5,10 +5,26 @@ import * as C from './style.ts';
 import digivice from '../../assets/imgs/digivice.png';
 import { SmileTwoTone } from '@ant-design/icons';
 import { Modal } from '../Modal/Modal.tsx';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootReducer } from '../../redux/root-reducer.ts';
 
 export function DigimonList() {
     const [digimons, setDigimons] = useState<IDigimon[]>([]);
     const [isOpen, setIsOpen] = useState(false);
+    const { user } = useSelector((rootReducer: RootReducer) => rootReducer.userReducer)
+    const dispatch = useDispatch()
+
+    const onLogin = () => {
+        if (user === null) {
+            setIsOpen(true);
+        } else {
+            //despachar action de logout
+            dispatch({
+                type: 'user/logout',
+                user: null,
+            })
+        }
+    }
 
 
     useEffect(() => {
@@ -26,11 +42,13 @@ export function DigimonList() {
                         <C.Img src={digivice} alt="Image of a digivice" />
                         <C.Title>Digimon App</C.Title>
                     </C.Title_Img>
-                    <C.Button onClick={() => setIsOpen(true)}>
+                    <C.Button onClick={() => {
+                        onLogin();
+                    }}>
                         <SmileTwoTone />
-                        Login
+                        {user === null ? 'Login' : 'Logout'}
                     </C.Button>
-                    {isOpen && <Modal handleClose = {() => setIsOpen(false)} IsOpen={isOpen}/>}
+                    {isOpen && <Modal handleClose={() => setIsOpen(false)} IsOpen={isOpen} />}
                 </C.Header>
                 <C.List>
                     {digimons.map((digimon) => (

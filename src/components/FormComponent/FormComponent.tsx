@@ -1,11 +1,18 @@
 import { useForm } from 'react-hook-form';
 import { IUser } from '../../interfaces/user';
 import * as C from './style';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootReducer } from '../../redux/root-reducer';
 
 //Tô tipando com a interface do usuário mas a ideia é que seja um componente
 //reusável ou seja, um formulário para "qualquer tipo" de interface
 
 export function FormComponent() {
+
+    //Objeto usuário que está sendo guardado dentro do useReducer
+    const { user } = useSelector((rootReducer: RootReducer) => rootReducer.userReducer )
+    const dispatch = useDispatch()
+
     const {
         register,
         handleSubmit,
@@ -13,8 +20,28 @@ export function FormComponent() {
     } = useForm<IUser>()
 
     const onSubmit = (data: IUser) => {
+        //usuário não está logado
+        if (user === null) {
+            //despachar action de login
+            dispatch({
+                type: 'user/login',
+                payload: {
+                    name: 'Guilherme Vaz',
+                    email: 'guilhermeolivaaz@gmail.com',
+                    password: 'senhas',
+                    digimons: [],
+                }
+            })
+        } else {
+            dispatch({
+                type: 'user/logout',
+                user: null,
+            })
+        }
         console.log(data)
     }
+
+    console.log(user)
 
     return (
         <C.Form onSubmit={handleSubmit(onSubmit)}>

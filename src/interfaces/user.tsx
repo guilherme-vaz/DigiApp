@@ -4,3 +4,7 @@ export interface IUser {
     password: string;
     digimons: Array<Object> | undefined;
 }
+
+export interface IUserState {
+    user: IUser | null;
+}
