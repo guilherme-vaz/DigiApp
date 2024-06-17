@@ -1,6 +1,6 @@
 # Digi App
 
-### Frontend
+### <p><small> A simple app using a Digimon API with React and Styled-componets to learn more about tests, project patterns and CI/CD</small></p>
 
 ```bash
 # clone o projeto e vá para seu diretório
@@ -12,7 +12,21 @@ $ npm install
 # acione o projeto
 $ npm run dev
 ````
-<p><small> A simple app using a Digimon API with React and Styled-componets to learn more about tests, project patterns and CI/CD</small></p>
+
+### A useful project and simple guide for: 
+
+- [x] Unit Tests using Jest
+- [x] Redux (the old and the new way to use)
+- [x] Typing
+
+### Todo: 
+- [ ] CI/CD
+- [ ] Design Patterns
+- [ ] Storybook
+- [ ] E2E Tests
+- [ ] Deploy
+- [ ] Authentication
+
 
 
 
