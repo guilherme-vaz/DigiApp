@@ -1,8 +1,17 @@
+//Importações da forma antiga que deixei para exemplificação caso necessário:
+// import { userReducer } from "./User/reducer";
+// import { cartReducer } from "./Cart/cart-reducer";
+
 import { combineReducers } from "redux";
-import { userReducer } from "./User/reducer";
+import { userSlice } from "./User/user-slice";
 
 export const rootReducer = combineReducers({
-    userReducer,
+    //Forma antiga de se usar (algumas empreas ainda usam assim)
+    // userReducer
+    // cartReducer
+
+    //Forma nova, atual:
+    userReducer: userSlice.reducer
 })
 
 export type RootReducer = ReturnType<typeof rootReducer>;

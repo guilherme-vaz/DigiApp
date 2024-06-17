@@ -3,14 +3,15 @@ import { IUser } from '../../interfaces/user';
 import * as C from './style';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootReducer } from '../../redux/root-reducer';
+import { login, logout } from '../../redux/User/user-slice';
 
 //Tô tipando com a interface do usuário mas a ideia é que seja um componente
 //reusável ou seja, um formulário para "qualquer tipo" de interface
 
 export function FormComponent() {
 
-    //Objeto usuário que está sendo guardado dentro do useReducer
-    const { user } = useSelector((rootReducer: RootReducer) => rootReducer.userReducer )
+    //Objeto usuário que está sendo guardado dentro do userReducer // userSlice
+    const { user } = useSelector((rootReducer: RootReducer) => rootReducer.userReducer)
     const dispatch = useDispatch()
 
     const {
@@ -22,21 +23,34 @@ export function FormComponent() {
     const onSubmit = (data: IUser) => {
         //usuário não está logado
         if (user === null) {
-            //despachar action de login
-            dispatch({
-                type: 'user/login',
-                payload: {
-                    name: 'Guilherme Vaz',
-                    email: 'guilhermeolivaaz@gmail.com',
-                    password: 'senhas',
-                    digimons: [],
-                }
-            })
+            //FORMA ANTIGA: de despachar action de login
+            // dispatch({
+            //     type: 'user/login',
+            //     payload: {
+            //         name: 'Guilherme Vaz',
+            //         email: 'guilhermeolivaaz@gmail.com',
+            //         password: 'senhas',
+            //         digimons: [],
+            //     }
+            // })
+
+            //FORMA NOVA:
+            dispatch(login({
+                name: 'Guilherme Vaz',
+                email: 'guilhermeolivaaz@gmail.com',
+                password: 'senhas',
+                digimons: [],
+            }))
+
         } else {
-            dispatch({
-                type: 'user/logout',
-                user: null,
-            })
+            //FORMA ANTIGA:
+            // dispatch({
+            //     type: 'user/logout',
+            //     user: null,
+            // })
+
+            //FORMA NOVA:
+            dispatch(logout({}))
         }
         console.log(data)
     }
