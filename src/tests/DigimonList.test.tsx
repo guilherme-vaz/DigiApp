@@ -1,5 +1,6 @@
 import { screen, render, waitFor } from '@testing-library/react'
-import { DigimonList } from '../Components/DigimonList';
+import { userEvent } from '@testing-library/user-event'
+import { DigimonList } from '../components/DigimonList/DigimonList';
 
 describe("Digimon list", () => {
     it('Should render digimon list', async () => {
@@ -19,6 +20,19 @@ describe("Digimon list", () => {
             const digimon2 = screen.getByText(/Yokomon/i);
             expect(digimon2).toBeInTheDocument();
         })
+    });
+
+
+    //OUTRA FORMA DE PEGAR ELEMENTOS:
+    it('Should render digimon list', async () => {
+
+        //Renderiza o componente
+        render(<DigimonList />);
+
+        //Pega o botão
+        const botao = screen.getByRole('button', { name: 'Adicionar ao time' })
+        //Simulando eventos do usuário
+        userEvent.click(botao)
     });
 
 })
