@@ -1,38 +1,35 @@
-import axios from 'axios';
+import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import { IDigimon } from '../interfaces/digimon';
-import { ReactNode, createContext, useEffect, useState } from 'react';
+import { getDigimons } from '../services/getDigimons';
 
-const API_URL = 'https://digimon-api.vercel.app/api/digimon';
-export const DigimonContext = createContext<IDigimon[] | undefined>(undefined);
+interface DigimonContextProps {
+    digimonsList: IDigimon[];
+    getDigimonList: () => void;
+}
 
-interface DigimonProviderProps {
-    children: ReactNode;
-} 
+export const DigimonContext = createContext<DigimonContextProps>({
+    digimonsList: [],
+    getDigimonList: () => {},
+});
 
-export const DigimonProvider = ({ children }: DigimonProviderProps) => {
-    const [digimons, setDigimons] = useState<IDigimon[]>([])
-    const [currentPage, setCurrentPage] = useState<number>(1);
-    const [pageSize, setPageSize] = useState<number>(10);
+export const DigimonProvider = ({ children }: { children: ReactNode }) => {
+    const [digimonsList, setDigimons] = useState<IDigimon[]>([]);
 
-    useEffect(() => {
-        axios.get(API_URL, { params: { page: currentPage, pageSize: pageSize }})
-            .then((response) => {
-                const digimonData = response.data.map((digimon: IDigimon) => ({
-                    name: digimon.name,
-                    img: digimon.img,
-                    level: digimon.level
-                }));
-
-                setDigimons(digimonData);
+    const getDigimonList = () => {
+        getDigimons()
+            .then((response: IDigimon[]) => {
+                setDigimons(response);
             })
-            .catch((err) => {
-                console.error("Ops! Ocorreu um erro: ", err);
-            });
-    }, [currentPage, pageSize]);
+            .catch((error) => console.error(error));
+    };
+
+    // useEffect(() => {
+    //     getDigimonList();
+    // }, [getDigimonList]);
 
     return (
-        <DigimonContext.Provider value={digimons}>
+        <DigimonContext.Provider value={{ digimonsList, getDigimonList }}>
             {children}
         </DigimonContext.Provider>
     );
-} 
+};

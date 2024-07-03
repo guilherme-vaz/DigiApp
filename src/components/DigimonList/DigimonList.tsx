@@ -1,20 +1,20 @@
-import { useEffect, useState } from 'react';
-import { IDigimon } from '../../interfaces/digimon.tsx';
-import { getDigimons } from '../../services/getDigimons.ts';
-import * as C from './style.ts';
-import digivice from '../../assets/imgs/digivice.png';
-import { SmileTwoTone } from '@ant-design/icons';
-import { Modal } from '../Modal/Modal.tsx';
+import { useContext, useState, useEffect } from 'react';
+import { IDigimon } from '../../interfaces/digimon';
+import * as C from './style';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootReducer } from '../../redux/root-reducer.ts';
-import { logout } from '../../redux/User/user-slice.ts';
-import { addProduct } from '../../redux/Cart/cart-slice.ts';
+import { RootReducer } from '../../redux/root-reducer';
+import { logout } from '../../redux/User/user-slice';
+import { DigimonContext } from '../../context/digimon';
+import { Menu } from '../Menu/Menu';
+import { useNavigate } from 'react-router-dom';
 
 export function DigimonList() {
-    const [digimons, setDigimons] = useState<IDigimon[]>([]);
     const [isOpen, setIsOpen] = useState(false);
-    const { user } = useSelector((rootReducer: RootReducer) => rootReducer.userReducer)
-    const dispatch = useDispatch()
+    const { user } = useSelector((rootReducer: RootReducer) => rootReducer.userReducer);
+    const dispatch = useDispatch();
+    const navigate = useNavigate()
+    const context = useContext(DigimonContext);
+    const { digimonsList, getDigimonList } = context;
 
     const onLogin = () => {
         if (user === null) {
@@ -42,42 +42,27 @@ export function DigimonList() {
         // dispatch(addProduct(digimon))
     }
 
-
     useEffect(() => {
-        getDigimons().then((response: IDigimon[]) => {
-            setDigimons(response);
-        })
-            .catch((error) => console.error(error));
-    }, []);
+        getDigimonList();
+    }, [getDigimonList]);
+
 
     return (
         <>
             <C.Container>
-                <C.Header>
-                    <C.Title_Img>
-                        <C.Img src={digivice} alt="Image of a digivice" />
-                        <C.Title>Digimon App</C.Title>
-                    </C.Title_Img>
-                    <C.Button onClick={() => {
-                        onLogin();
-                    }}>
-                        <SmileTwoTone />
-                        {user === null ? 'Login' : 'Logout'}
-                    </C.Button>
-                    {isOpen && <Modal handleClose={() => setIsOpen(false)} IsOpen={isOpen} />}
-                </C.Header>
+                <Menu isOpen={isOpen} onLogin={onLogin} handleClose={() =>  setIsOpen(!isOpen)} backToHome={() => (null)} goToUserPage={() => navigate('/user')} />
                 <C.List>
-                    {digimons.map((digimon) => (
-
+                    {digimonsList && digimonsList.map((digimon) => (
                         <li key={digimon.name}>
                             <div>
                                 <img src={digimon.img} alt={digimon.name} />
                                 <div>Name: {digimon.name}</div>
                                 <div>Level: {digimon.level}</div>
-                                <button type='submit' onClick={() => handleClickAddToteam(digimon)}>Adicionar ao time</button>
+                                <button type='button' onClick={() => handleClickAddToteam(digimon)}>
+                                    Adicionar ao time
+                                </button>
                             </div>
                         </li>
-
                     ))}
                 </C.List>
             </C.Container>
